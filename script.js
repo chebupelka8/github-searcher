@@ -17,8 +17,10 @@ searchButton.onclick = function() {
     if (typeof entered === "string" && entered.trim().length > 0) {
         UserRequests.getUser(entered).then(function(response) {
             console.log(response);
+            
+            if (response["status"] !== "404") avatarPreview.src = response["avatar_url"];
+            else avatarPreview.src = "./assets/unknown_user.jpg";
 
-            avatarPreview.src = response["avatar_url"];
             namePreview.innerHTML = response["name"];
             loginPreview.innerHTML = response["login"];
         });
