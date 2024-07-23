@@ -5,110 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub Users</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-    <style>
-        @import url(
-            'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'
-        );
-
-        * {
-            font-family: "Poppins", sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        label {
-            color: white;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            flex-direction: column;
-            background-color: #F9F9F9;
-        }
-
-        .finder {
-            display: flex;
-            margin: 10px;
-            width: 600px;
-        }
-
-        #find-input {
-            flex-grow: 4;
-            background-color: #46454d;
-            color: white;
-            font-weight: 600;
-            margin-right: 5px;
-        }
-
-        #find-button {
-            flex-grow: 1;
-            cursor: pointer;
-        }
-
-        #find-button, #find-input {
-            border: none;
-            outline: none;
-            transition: 0.7s;
-            border-radius: 5px;
-            padding: 5px 15px;
-            height: 40px;
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-        }
-
-        .container {
-            /* background-image: url("./assets/background.webp");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover; */
-
-            padding: 20px;
-            width: 600px;
-            height: 600px;
-            background-color: #1d1d1d;
-            border-radius: 7px;
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-        }
-
-        img#avatar {
-            border-radius: 50%;
-        }
-
-        .user-preview {
-            display: flex;
-            flex-direction: column; 
-        }
-
-        #name {
-            font-weight: 600;
-        }
-
-        #login {
-            color: #b5b5b5;
-        }
-
-        .data {
-            display: flex;
-            flex-direction: column;
-            margin-top: 20px;
-        }
-
-        .data label {
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        span.some {
-            color: #b5b5b5;
-            font-weight: normal;
-        }
-
-    </style>
-
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
     <div class="finder">
@@ -116,19 +13,32 @@
         <button id="find-button">Search</button>
     </div>
     
-    <div class="container">
-        <div class="user-preview">
-            <img id="avatar" width="180px"> 
-            <label id="name"></label>
-            <label id="login"></label>
+    <div class="container" id="container">
+        <div class="wrapper" id="main-div">
+
+            <div class="user-preview">
+                <img id="avatar" width="180px"> 
+                <label id="name"></label>
+                <label id="login"></label>
+            </div>
+    
+            <div class="data">
+                <label id="following"></label>
+                <label id="followers"></label>
+            </div>
         </div>
 
-        <div class="data">
-            <label id="following"></label>
-            <label id="followers"></label>
+        <div class="wrapper" id="repos-div">
+            <div class="inner" id="repos-preview">
+                
+            </div>
         </div>
     </div>
-
+    
     <script src="script.js" type="module"></script>
+
 </body>
 </html>
+
+
+

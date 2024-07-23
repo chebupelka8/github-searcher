@@ -1,0 +1,48 @@
+img#avatar {
+    border-radius: 50%;
+}
+
+.user-preview {
+    display: flex;
+    flex-direction: column; 
+}
+
+#name {
+    color: white;
+    font-weight: 600;
+}
+
+#login {
+    color: #b5b5b5;
+}
+
+.data {
+    display: table;
+    margin-top: 10px;
+}
+
+.data label {
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+}
+
+/* Preview repos */
+.inner {
+    overflow: auto;
+    height: 500px;
+}
+
+#repos-div {
+    width: 100%;
+}
+
+.repo {
+    margin: 10px;
+    height: 60px;
+    border-radius: 7px;
+    border: 1px solid #2C2C2C;
+    background-color: #212121;
+    color: white;
+    padding: 5px;
+}

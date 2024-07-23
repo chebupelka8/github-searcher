@@ -1,6 +1,7 @@
 "use strict";
 
-import { Path, UserRequests } from "./user_requests.js";
+import { UserRequests } from "./user_requests.js";
+import { HtmlManager } from "./html_manager.js";
 
 
 const avatarPreview = document.getElementById("avatar");
@@ -13,25 +14,37 @@ const followers = document.getElementById("followers");
 const searchButton = document.getElementById("find-button");
 const searchInput = document.getElementById("find-input");
 
+const reposPreview = document.getElementById("repos-preview");
+
 
 searchButton.onclick = function() {
     const entered = searchInput.value;
 
     if (typeof entered === "string" && entered.trim().length > 0) {
-        UserRequests.getUser(entered).then(function(response) {
-            console.log(response);
+        UserRequests.getUser(entered.trim()).then(function(response) {
             
             if (response["status"] !== "404") avatarPreview.src = response["avatar_url"];
-            else avatarPreview.src = "./assets/unknown_user.jpg";
+            else {
+                document.getElementById("container")["background-image"] = `url("./assets/not_found.jpg")`;
+                avatarPreview.src = "./assets/unknown_user.jpg";
+            };
 
             namePreview.innerHTML = response["name"];
             loginPreview.innerHTML = response["login"];
 
-            following.innerHTML = `${response["following"]} <span class="some">following</span>`;
-            followers.innerHTML = `${response["followers"]} <span class="some">followers</span>`;
+            following.innerHTML = `${response["following"]} <span style="color: #b5b5b5; font-weight: normal;">following</span>`;
+            followers.innerHTML = `${response["followers"]} <span style="color: #b5b5b5; font-weight: normal;">followers</span>`;
+            
+            UserRequests.getUserRepos(response).then(function(repos) {
+                reposPreview.querySelectorAll("div.repo").forEach(entry => entry.remove());
+                HtmlManager.createRepos(repos, reposPreview);
+
+                console.log(repos);
+            });
+            
         });
 
-        UserRequests.countStars(entered).then(response => console.log(response));
+
     };
 }
 

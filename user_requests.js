@@ -1,7 +1,7 @@
 "use strict";
 
 
-export class Path {
+class Path {
     static mergeUrl(...values) {
         const regexs = [new RegExp("^\\/", "g"), new RegExp("\\/$", "g")];
         const editedValues = values.map(function(entry) {
@@ -42,6 +42,9 @@ export class UserRequests {
 
     static async countStars(target) {
         const response =  await UserRequests.getUserRepos(target);
-        return response.length;
+        
+        return response.reduce(function(accumulator, entry) {
+            return accumulator + entry["stargazers_count"]; 
+        }, 0);
     }
 }

@@ -1,0 +1,56 @@
+
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: #F9F9F9;
+}
+
+.finder {
+    display: flex;
+    margin: 10px;
+    width: 600px;
+}
+
+#find-input {
+    flex-grow: 4;
+    background-color: #46454d;
+    color: white;
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+#find-button {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+#find-button, #find-input {
+    border: none;
+    outline: none;
+    transition: 0.7s;
+    border-radius: 5px;
+    padding: 5px 15px;
+    height: 40px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.container {
+    /* background-image: url("./assets/background.webp"); */
+    /* background-position: center; */
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
+
+    display: flex;
+    /* justify-content: space-between; */
+
+    padding: 20px;
+    width: 600px;
+    height: 600px;
+    background-color: #1d1d1d;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
