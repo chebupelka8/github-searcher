@@ -21,9 +21,21 @@ export class UserRequests {
         return await fetch(url);
     }
 
-    static async getUser(userName) {
-        const response = await UserRequests._request(Path.mergeUrl(UserRequests.prefix, `/users/${userName}`));
+    static async _getJson(...urls) {
+        const response = await UserRequests._request(
+            Path.mergeUrl(
+                UserRequests.prefix, ...urls
+            )
+        );
         return await response.json();
+    }
+
+    static async getUser(userName) {
+        return await UserRequests._getJson("users", userName);
+    }
+
+    static async getOrganization(orgName) {
+        return await UserRequests._getJson("orgs", orgName);
     }
 
     static async getUserRepos(target) {

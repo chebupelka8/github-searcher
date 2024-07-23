@@ -15,13 +15,18 @@ const searchButton = document.getElementById("find-button");
 const searchInput = document.getElementById("find-input");
 
 const reposPreview = document.getElementById("repos-preview");
-
+const searchType = document.getElementById("search-type");
 
 searchButton.onclick = function() {
-    const entered = searchInput.value;
+    const entered = searchInput.value.trim();
+
+    const searchTypeValue = searchType.value;
+    const getTarget = UserRequests[
+        `get${searchTypeValue.slice(0, searchTypeValue.length - 1)}`
+    ];  // very bad practice!!!
 
     if (typeof entered === "string" && entered.trim().length > 0) {
-        UserRequests.getUser(entered.trim()).then(function(response) {
+        getTarget(entered).then(function(response) {
             
             if (response["status"] !== "404") avatarPreview.src = response["avatar_url"];
             else {
