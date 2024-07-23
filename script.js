@@ -43,8 +43,10 @@ searchButton.onclick = function() {
             followers.innerHTML = `${response["followers"]} <span style="color: #b5b5b5; font-weight: normal;">followers</span>`;
             
             UserRequests.getTargetRepos(response).then(function(repos) {
-                HtmlManager.createRepos(repos, reposPreview);
-                console.log(repos);
+                if (repos.length > 1) {
+                    HtmlManager.createRepos(repos, reposPreview);
+                    console.log(repos);
+                }
             }); 
         });
 
