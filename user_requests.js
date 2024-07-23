@@ -38,7 +38,7 @@ export class UserRequests {
         return await UserRequests._getJson("orgs", orgName);
     }
 
-    static async getUserRepos(target) {
+    static async getTargetRepos(target) {
         if (typeof target === "string" && target.trim().length > 0) {
             const response = await UserRequests.getUser(target);
             const reposResponse = await UserRequests._request(response["repos_url"]);

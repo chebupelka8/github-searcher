@@ -25,12 +25,14 @@ searchButton.onclick = function() {
         `get${searchTypeValue.slice(0, searchTypeValue.length - 1)}`
     ];  // very bad practice!!!
 
+    
+    reposPreview.querySelectorAll("div.repo").forEach(entry => entry.remove());  // clear repositories preview
+
     if (typeof entered === "string" && entered.trim().length > 0) {
         getTarget(entered).then(function(response) {
             
             if (response["status"] !== "404") avatarPreview.src = response["avatar_url"];
             else {
-                document.getElementById("container")["background-image"] = `url("./assets/not_found.jpg")`;
                 avatarPreview.src = "./assets/unknown_user.jpg";
             };
 
@@ -40,13 +42,10 @@ searchButton.onclick = function() {
             following.innerHTML = `${response["following"]} <span style="color: #b5b5b5; font-weight: normal;">following</span>`;
             followers.innerHTML = `${response["followers"]} <span style="color: #b5b5b5; font-weight: normal;">followers</span>`;
             
-            UserRequests.getUserRepos(response).then(function(repos) {
-                reposPreview.querySelectorAll("div.repo").forEach(entry => entry.remove());
+            UserRequests.getTargetRepos(response).then(function(repos) {
                 HtmlManager.createRepos(repos, reposPreview);
-
                 console.log(repos);
-            });
-            
+            }); 
         });
 
 
