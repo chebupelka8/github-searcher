@@ -39,10 +39,26 @@ img#avatar {
 
 .repo {
     margin: 10px;
-    height: 60px;
+    height: 75px;
     border-radius: 7px;
     border: 1px solid #2C2C2C;
     background-color: #212121;
     color: white;
     padding: 5px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.repo .name {
+    font-size: 14.5px;
+    font-weight: 500;
+}
+
+.repo .description {
+    margin-left: 3px;
+    font-size: 13px;
+    color: #b5b5b5;
+    overflow: hidden;
+    text-overflow: clip;
 }

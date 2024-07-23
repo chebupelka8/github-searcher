@@ -13,7 +13,17 @@ export class HtmlManager {
         const container = document.createElement("div");
         container.classList.add("repo");
 
-        container.appendChild(document.createTextNode(repo["name"]));
+        const repoName = document.createElement("label");
+        repoName.appendChild(document.createTextNode(repo["name"]));
+        repoName.classList.add("name");
+        container.appendChild(repoName);
+
+        if (repo["description"] !== null) {
+            const repoDescription = document.createElement("label");
+            repoDescription.appendChild(document.createTextNode(repo["description"]));
+            repoDescription.classList.add("description");
+            container.appendChild(repoDescription);
+        }
 
         return container;
     }
