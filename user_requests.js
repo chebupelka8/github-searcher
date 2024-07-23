@@ -38,18 +38,19 @@ export class UserRequests {
         return await UserRequests._getJson("orgs", orgName);
     }
 
+    static async getTargetReposWithRequest(target) { 
+        const response = await UserRequests.getUser(target);
+        const reposResponse = await UserRequests._request(response["repos_url"]);
+
+        return await reposResponse.json();
+    }
+
     static async getTargetRepos(target) {
-        if (typeof target === "string" && target.trim().length > 0) {
-            const response = await UserRequests.getUser(target);
-            const reposResponse = await UserRequests._request(response["repos_url"]);
+        const response = await UserRequests._request(
+            target["repos_url"]
+        );
 
-            return await reposResponse.json();
-        }
-        else if (typeof target === "object") {
-            const reposResponse = await UserRequests._request(target["repos_url"]);
-
-            return await reposResponse.json();
-        }
+        return await response.json();
     }
 
     static async countStars(target) {
