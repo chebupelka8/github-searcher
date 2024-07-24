@@ -28,5 +28,27 @@ export class HtmlManager {
         return container;
     }
 
-    static createUserData
+    static setUserData(userResponse) {
+        const avatarPreview = document.getElementById("avatar");
+
+        if (userResponse["status"] !== "404") avatarPreview.src = userResponse["avatar_url"];
+        else avatarPreview.src = "./assets/unknown_user.jpg";
+
+        const createPersonalUserData = function(...ids) {
+            ids.forEach(id => {
+                document.getElementById(id).appendChild(
+                    document.createTextNode(userResponse[id])
+                );
+            });
+        }
+
+        const createTrackingUserData = function(...ids) {
+            ids.forEach(id => {
+                document.getElementById(id).innerHTML = `${userResponse[id]} <span style="color: #b5b5b5; font-weight: normal;">${id}</span>`;
+            });
+        }
+
+        createPersonalUserData("name", "login");
+        createTrackingUserData("following", "followers");
+    }
 }
