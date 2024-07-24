@@ -11,29 +11,27 @@ const reposPreview = document.getElementById("repos-preview");
 const searchType = document.getElementById("search-type");
 
 
-searchButton.onclick = function() {
+searchButton.addEventListener("click", function() {
     const entered = searchInput.value.trim();
+    if (entered.length <= 0) return;
 
     const searchTypeValue = searchType.value;
     const getTarget = UserRequests[
         `get${searchTypeValue.slice(0, searchTypeValue.length - 1)}`
-    ];  // very bad practice!!!
+    ];
     
     reposPreview.querySelectorAll("div.repo").forEach(entry => entry.remove());  // clear repositories preview
 
-    if (typeof entered === "string" && entered.trim().length > 0) {
-        getTarget(entered).then(function(response) {
-            console.log(response);
-            
-            HtmlManager.setUserData(response);
-            
-            UserRequests.getTargetRepos(response).then(function(repos) {
-                if (repos.length > 1) {
-                    HtmlManager.createRepos(repos, reposPreview);
-                    console.log(repos);
-                }
-            }); 
-        });
-    };
-}
-
+    getTarget(entered).then(function(response) {
+        console.log(response);  
+        HtmlManager.setUserData(response);
+        if (response.status === "404") return;
+        
+        UserRequests.getTargetRepos(response).then(function(repos) {
+            if (repos.length > 1) {
+                HtmlManager.createRepos(repos, reposPreview);
+                console.log(repos);
+            }
+        }); 
+    }).catch(error => console.log(error));
+});
