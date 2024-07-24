@@ -38,19 +38,22 @@ export class UserRequests {
         return await UserRequests._getJson("orgs", orgName);
     }
 
-    static async getTargetReposWithRequest(target) { 
+    static async _getTargetReposWithRequest(target) { 
         const response = await UserRequests.getUser(target);
-        const reposResponse = await UserRequests._request(response["repos_url"]);
-
-        return await reposResponse.json();
+        return await UserRequests.getTargetRepos(response);
     }
 
     static async getTargetRepos(target) {
+        console.log(UserRequests._getCountRepoPages(target));
         const response = await UserRequests._request(
             target["repos_url"]
         );
 
         return await response.json();
+    }
+
+    static _getCountRepoPages(target) {
+        return Math.ceil(target["public_repos"] / 30);
     }
 
     static async countStars(target) {

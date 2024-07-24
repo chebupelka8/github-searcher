@@ -27,4 +27,6 @@ export class HtmlManager {
 
         return container;
     }
+
+    static createUserData
 }
