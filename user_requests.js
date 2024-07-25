@@ -1,33 +1,25 @@
 "use strict";
 
+import { Path } from "./path.js";
 
-class Path {
-    static mergeUrl(...values) {
-        const regexs = [new RegExp("^\\/", "g"), new RegExp("\\/$", "g")];
-        const editedValues = values.map(function(entry) {
-            regexs.forEach(reg => entry = entry.replaceAll(reg, ""));
-            return entry;
-        });
-        
-        return editedValues.join("/"); 
+
+export class Requests {
+    static async request(url) {
+        return await fetch(url);
+    }
+
+    static async requestJson(url) {
+        const response = await Requests.request(url);
+        return await response.json();
     }
 }
 
 
-export class UserRequests {
+export class UserRequests extends Requests {
     static prefix = "https://api.github.com";
     
-    static async _request(url) {
-        return await fetch(url);
-    }
-
     static async _getJson(...urls) {
-        const response = await UserRequests._request(
-            Path.mergeUrl(
-                UserRequests.prefix, ...urls
-            )
-        );
-        return await response.json();
+        return await UserRequests.requestJson(Path.mergeUrl(UserRequests.prefix, ...urls));
     }
 
     static async getUser(userName) {
@@ -38,25 +30,25 @@ export class UserRequests {
         return await UserRequests._getJson("orgs", orgName);
     }
 
-    static async _getTargetReposWithRequest(target) { 
-        const response = await UserRequests.getUser(target);
-        return await UserRequests.getTargetRepos(response);
-    }
-
     static async getTargetRepos(target) {
-        console.log(UserRequests._getCountRepoPages(target));
-        const response = await UserRequests._request(
-            target["repos_url"]
-        );
-
-        return await response.json();
+        return await UserRequests.requestJson(target["repos_url"]);
     }
 
     static _getCountRepoPages(target) {
         return Math.ceil(target["public_repos"] / 30);
     }
 
-    static async countStars(target) {
+    static getRepoURLs(target) {
+        const result = [];
+
+        for (let i = 1; i <= UserRequests._getCountRepoPages(target); i++) {
+            result.push(Path.addQueryParams(target["repos_url"], {page: i}));
+        }
+
+        return result;
+    }
+
+    static async countStars(target) {  // work wrong yet
         const response =  await UserRequests.getUserRepos(target);
         
         return response.reduce(function(accumulator, entry) {

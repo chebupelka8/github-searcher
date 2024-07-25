@@ -3,6 +3,8 @@
 import { UserRequests } from "./user_requests.js";
 import { HtmlManager } from "./html_manager.js";
 
+import { Path } from "./path.js";
+
 
 const searchButton = document.getElementById("find-button");
 const searchInput = document.getElementById("find-input");
@@ -26,12 +28,20 @@ searchButton.addEventListener("click", function() {
         console.log(response);  
         HtmlManager.setUserData(response);
         if (response.status === "404") return;
-        
-        UserRequests.getTargetRepos(response).then(function(repos) {
-            if (repos.length > 1) {
-                HtmlManager.createRepos(repos, reposPreview);
-                console.log(repos);
-            }
-        }); 
+
+        // console.log(UserRequests.getRepoURLs(response));
+
+        UserRequests.getRepoURLs(response).forEach(url => {
+            UserRequests.requestJson(url).then(function(reposPage) {
+                HtmlManager.createRepos(reposPage, reposPreview);
+                console.log(reposPage);
+            });
+        });
     }).catch(error => console.log(error));
 });
+
+
+document.getElementById("test-button").addEventListener("click", function() {
+    console.log(Path.addQueryParams("https://api.github.com/", {page: 2, "hello world": "string"}));
+})
+

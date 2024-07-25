@@ -36,9 +36,7 @@ export class HtmlManager {
 
         const createPersonalUserData = function(...ids) {
             ids.forEach(id => {
-                document.getElementById(id).appendChild(
-                    document.createTextNode(userResponse[id])
-                );
+                document.getElementById(id).textContent = userResponse[id];
             });
         }
 
