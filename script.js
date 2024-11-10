@@ -22,7 +22,8 @@ searchButton.addEventListener("click", function() {
         `get${searchTypeValue.slice(0, searchTypeValue.length - 1)}`
     ];
     
-    reposPreview.querySelectorAll("div.repo").forEach(entry => entry.remove());  // clear repositories preview
+    // reposPreview.querySelectorAll("div.repo").forEach(entry => entry.remove());  // clear repositories preview
+    reposPreview.innerHTML = "";
 
     getTarget(entered).then(function(response) {
         console.log(response);  
@@ -39,9 +40,4 @@ searchButton.addEventListener("click", function() {
         });
     }).catch(error => console.log(error));
 });
-
-
-document.getElementById("test-button").addEventListener("click", function() {
-    console.log(Path.addQueryParams("https://api.github.com/", {page: 2, "hello world": "string"}));
-})
 
